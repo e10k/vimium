@@ -606,6 +606,56 @@ export class SearchEngineCompleter {
 
 SearchEngineCompleter.debug = false;
 
+
+export class MenuCompleter {
+  async getActiveTabId() {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    return tab?.id ?? null;
+  }
+
+  async getNavLinks() {
+    const tabId = await this.getActiveTabId();
+    if (tabId == null) return [];
+    try {
+      const res = await chrome.tabs.sendMessage(tabId, { handler: "getNavLinks" });
+      return res && res.ok && Array.isArray(res.links) ? res.links : [];
+    } catch {
+      // no content script on this page or other error
+      return [];
+    }
+  }
+
+  async filter({ queryTerms }) {
+    const anchors = await this.getNavLinks();
+    if (! anchors.length) {
+      return [];
+    }
+
+    const suggestions = anchors
+        .map((m) => {
+          const suggestion = new Suggestion({
+            queryTerms,
+            description: "menu",
+            url: m.url,
+            title: m.title,
+            deDuplicate: false,
+          });
+          suggestion.relevancy = this.computeRelevancy(suggestion);
+          return suggestion;
+        })
+        .sort((a, b) => b.relevancy - a.relevancy);
+    return suggestions;
+  }
+
+  computeRelevancy(suggestion) {
+    if (suggestion.queryTerms.length > 0) {
+      return RankingUtils.wordRelevancy(suggestion.queryTerms, suggestion.url, suggestion.title);
+    } else {
+      return bgUtils.tabRecency.recencyScore(suggestion.tabId);
+    }
+  }
+}
+
 // A completer which calls filter() on many completers, aggregates the results, ranks them, and
 // returns the top 10. All queries from the vomnibar come through a multi completer.
 const maxResults = 10;

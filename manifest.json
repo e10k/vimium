@@ -65,6 +65,16 @@
       "match_about_blank": true
     },
     {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content_scripts/nav_links.js"
+      ],
+      "css": ["content_scripts/vimium.css"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
       "matches": ["file:///", "file:///*/"],
       "css": ["content_scripts/file_urls.css"],
       "run_at": "document_start",

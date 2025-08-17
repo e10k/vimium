@@ -58,6 +58,24 @@ const Vomnibar = {
     });
   },
 
+  activateLinks(sourceFrameId, registryEntry) {
+    const options = Object.assign({}, registryEntry.options, {
+      completer: "menu",
+      selectFirst: true,
+    });
+    this.open(sourceFrameId, options);
+  },
+
+  activateLinksInNewTab(sourceFrameId, registryEntry) {
+    const options = Object.assign({}, registryEntry.options, {
+      completer: "menu",
+      selectFirst: true,
+      newTab: true,
+    });
+    this.open(sourceFrameId, options);
+  },
+
+
   init() {
     if (!this.vomnibarUI) {
       this.vomnibarUI = new UIComponent();

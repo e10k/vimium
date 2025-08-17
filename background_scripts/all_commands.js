@@ -358,6 +358,26 @@ const allCommands = [
     topFrame: true,
   },
 
+  {
+    name: "Vomnibar.activateLinks",
+    desc: "Open a menu link",
+    group: "vomnibar",
+    options: {
+      query: "The text to prefill the Vomnibar with.",
+    },
+    topFrame: true,
+  },
+
+  {
+    name: "Vomnibar.activateLinksInNewTab",
+    desc: "Open a menu link in a new tab",
+    group: "vomnibar",
+    options: {
+      query: "The text to prefill the Vomnibar with.",
+    },
+    topFrame: true,
+  },
+
   //
   // Find
   //
