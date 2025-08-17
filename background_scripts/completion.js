@@ -607,7 +607,7 @@ export class SearchEngineCompleter {
 SearchEngineCompleter.debug = false;
 
 
-export class MenuCompleter {
+export class NavLinkCompleter {
   async getActiveTabId() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     return tab?.id ?? null;
@@ -635,10 +635,10 @@ export class MenuCompleter {
         .map((m) => {
           const suggestion = new Suggestion({
             queryTerms,
-            description: "menu",
+            description: "nav",
             url: m.url,
             title: m.title,
-            deDuplicate: false,
+            deDuplicate: true,
           });
           suggestion.relevancy = this.computeRelevancy(suggestion);
           return suggestion;

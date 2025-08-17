@@ -359,8 +359,8 @@ const allCommands = [
   },
 
   {
-    name: "Vomnibar.activateLinks",
-    desc: "Open a menu link",
+    name: "Vomnibar.activateNavLinks",
+    desc: "Open a nav link",
     group: "vomnibar",
     options: {
       query: "The text to prefill the Vomnibar with.",
@@ -369,8 +369,8 @@ const allCommands = [
   },
 
   {
-    name: "Vomnibar.activateLinksInNewTab",
-    desc: "Open a menu link in a new tab",
+    name: "Vomnibar.activateNavLinksInNewTab",
+    desc: "Open a nav link in a new tab",
     group: "vomnibar",
     options: {
       query: "The text to prefill the Vomnibar with.",

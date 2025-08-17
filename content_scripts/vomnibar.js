@@ -58,17 +58,17 @@ const Vomnibar = {
     });
   },
 
-  activateLinks(sourceFrameId, registryEntry) {
+  activateNavLinks(sourceFrameId, registryEntry) {
     const options = Object.assign({}, registryEntry.options, {
-      completer: "menu",
+      completer: "navLinks",
       selectFirst: true,
     });
     this.open(sourceFrameId, options);
   },
 
-  activateLinksInNewTab(sourceFrameId, registryEntry) {
+  activateNavLinksInNewTab(sourceFrameId, registryEntry) {
     const options = Object.assign({}, registryEntry.options, {
-      completer: "menu",
+      completer: "navLinks",
       selectFirst: true,
       newTab: true,
     });

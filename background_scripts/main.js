@@ -19,7 +19,7 @@ import {
   MultiCompleter,
   SearchEngineCompleter,
   TabCompleter,
-  MenuCompleter,
+  NavLinkCompleter,
 } from "./completion.js";
 
 // NOTE(philc): This file has many superfluous return statements in its functions, as a result of
@@ -48,7 +48,7 @@ const completionSources = {
   domains: new DomainCompleter(),
   tabs: new TabCompleter(),
   searchEngines: new SearchEngineCompleter(),
-  menu: new MenuCompleter(),
+  navLinks: new NavLinkCompleter(),
 };
 
 const completers = {
@@ -57,12 +57,12 @@ const completers = {
     completionSources.history,
     completionSources.domains,
     completionSources.tabs,
-    completionSources.menu,
+    completionSources.navLinks,
     completionSources.searchEngines,
   ]),
   bookmarks: new MultiCompleter([completionSources.bookmarks]),
   tabs: new MultiCompleter([completionSources.tabs]),
-  menu: new MultiCompleter([completionSources.menu]),
+  navLinks: new MultiCompleter([completionSources.navLinks]),
 };
 
 // A query dictionary for `chrome.tabs.query` that will return only the visible tabs.
