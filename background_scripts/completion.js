@@ -606,7 +606,6 @@ export class SearchEngineCompleter {
 
 SearchEngineCompleter.debug = false;
 
-
 export class NavLinkCompleter {
   async getActiveTabId() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -620,18 +619,18 @@ export class NavLinkCompleter {
       const res = await chrome.tabs.sendMessage(tabId, { handler: "getNavLinks" });
       return res && res.ok && Array.isArray(res.links) ? res.links : [];
     } catch {
-      // no content script on this page or other error
       return [];
     }
   }
 
   async filter({ queryTerms }) {
     const anchors = await this.getNavLinks();
+
     if (! anchors.length) {
       return [];
     }
 
-    const suggestions = anchors
+    return anchors
         .map((m) => {
           const suggestion = new Suggestion({
             queryTerms,
@@ -644,7 +643,6 @@ export class NavLinkCompleter {
           return suggestion;
         })
         .sort((a, b) => b.relevancy - a.relevancy);
-    return suggestions;
   }
 
   computeRelevancy(suggestion) {

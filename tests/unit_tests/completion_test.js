@@ -15,6 +15,7 @@ import {
   SearchEngineCompleter,
   Suggestion,
   TabCompleter,
+  NavLinkCompleter,
 } from "../../background_scripts/completion.js";
 import "../../lib/url_utils.js";
 
@@ -397,6 +398,26 @@ context("SearchEngineCompleter", () => {
       [googleSearchUrl + "blue", googleSearchUrl + "blue1", googleSearchUrl + "blue2"],
       results.map((suggestion) => suggestion.url),
     );
+  });
+});
+
+context("nav link completer", () => {
+  const links = [
+    { title: "Lorem", url: "https://example.com/lorem" },
+    { title: "Ipsum", url: "https://example.com/ipsum" },
+  ];
+
+  let completer;
+
+  setup(() => {
+    completer = new NavLinkCompleter();
+    completer.getNavLinks = () => Promise.resolve(links);
+  });
+
+  should("return matching links", async () => {
+    const results = await filterCompleter(completer, ["ipsum"]);
+    assert.equal(["Ipsum", "Lorem"], results.map((link) => link.title));
+    assert.equal(["https://example.com/ipsum", "https://example.com/lorem"], results.map((link) => link.url));
   });
 });
 

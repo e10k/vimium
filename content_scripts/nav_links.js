@@ -10,6 +10,10 @@ const NavLinks = {
                     return;
                 }
 
+                if (! title.length) {
+                    title = url;
+                }
+
                 links.push({
                     title: title,
                     url: url
